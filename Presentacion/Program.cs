@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Entity;
+using BLL;
 namespace Presentacion
 {
     class Program
@@ -14,7 +15,7 @@ namespace Presentacion
             
             string cedula, nombre, sexo;
             int edad;
-            
+            PersonaService personaService = new PersonaService();
             Console.WriteLine("Digite la Cedula:");
             cedula = Console.ReadLine();
             Console.WriteLine("Digite la Nombre:");
@@ -26,16 +27,30 @@ namespace Presentacion
 
             Persona persona = new Persona()
             {
-                Cedula = cedula,
+                Identificacion = cedula,
                 Nombre = nombre,
                 Edad = edad,
                 Sexo=sexo
             };
 
             persona.CalcularPulsacion();
-
-
             Console.WriteLine($"Su Pulsacion es:{persona.Pulsacion}");
+            Console.WriteLine(personaService.Guardar(persona));
+
+            Console.WriteLine("/// Consulta de Datos///");
+            ConsultaResponse response = personaService.Consultar();
+            if (!response.Error)
+            {
+                foreach (var item in response.Personas)
+                {
+                    Console.WriteLine($"Identificacion: {item.Identificacion} Nombre:{item.Nombre} Edad:{item.Edad} Sexo:{item.Sexo} Pulsación:{item.Pulsacion}");
+                }
+            }
+            else
+            {
+                Console.WriteLine(response.Mensaje);
+            }
+
             Console.ReadKey();
         }
     }

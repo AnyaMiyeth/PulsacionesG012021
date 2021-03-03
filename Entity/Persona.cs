@@ -10,7 +10,7 @@ namespace Entity
     {
 
         public string Nombre { get; set; }
-        public string Cedula { get; set; }
+        public string Identificacion { get; set; }
         public int  Edad { get; set; }
         public string Sexo { get; set; }
         public decimal Pulsacion { get; set; }
@@ -31,6 +31,11 @@ namespace Entity
             }
 
 
+        }
+
+        public override string ToString()
+        {
+            return $"{Identificacion};{Nombre};{Edad};{Sexo};{Pulsacion}";
         }
     }
 }
