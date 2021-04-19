@@ -37,5 +37,7 @@ namespace Entity
         {
             return $"{Identificacion};{Nombre};{Edad};{Sexo};{Pulsacion}";
         }
+
+        
     }
 }

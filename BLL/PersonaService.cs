@@ -19,8 +19,12 @@ namespace BLL
         {
             try
             {
-                personaRepository.Guardar(persona);
-                return "Datos guardados Satisfaactoriamente";
+                if (personaRepository.BuscarPorIdentificacion(persona.Identificacion)==null)
+                {
+                    personaRepository.Guardar(persona);
+                    return "Datos guardados Satisfaactoriamente";
+                }
+                return "No es posible guardar la Información, la identificación ya se encuentra registrada";
             }
             catch (Exception exception)
             {
@@ -38,6 +42,18 @@ namespace BLL
             catch (Exception exception)
             {
               return new ConsultaResponse("Ocurrio el siguiente error: " + exception.Message);
+            }
+        }
+
+        public ConsultaResponse Consultar(string tipo)
+        {
+            try
+            {
+                return new ConsultaResponse(personaRepository.FiltroSexo(tipo));
+            }
+            catch (Exception exception)
+            {
+                return new ConsultaResponse("Ocurrio el siguiente error: " + exception.Message);
             }
         }
 

@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+
 using System.Text;
 using System.Threading.Tasks;
 using Entity;
 using System.IO;
+using System.Linq;
 
 namespace DAL
 {
@@ -55,14 +56,55 @@ namespace DAL
         public Persona BuscarPorIdentificacion(string identificacion) 
         {
 
-            Persona persona = new Persona();
-            return persona;
+            foreach (var item in Consultar())
+            {
+                if (item.Identificacion.Equals(identificacion))
+                {
+                    return item;
+                }
+            }
+            return null;
         }
 
 
         public void Modificar(Persona personaNew, string identificacion) 
         { 
         
+        }
+
+
+
+
+        public List<Persona> FiltroHombres()
+        {
+            List<Persona> personas = Consultar();
+            return (from p in personas
+                   where p.Sexo.Equals("M")
+                   select p).ToList();
+        }
+
+        public int ContarHombres()
+        {
+            List<Persona> personas = Consultar();
+            return (from p in personas
+                    where p.Sexo.Equals("M")
+                    select p).Count();
+        }
+
+        public List<Persona> FiltroMujeres()
+        {
+         return Consultar().Where(p=>p.Sexo.Equals("F")).ToList();  
+        }
+
+
+        public List<Persona> FiltroSexo(string tipo)
+        {
+            return Consultar().Where(p => p.Sexo.Equals(tipo)).ToList();
+        }
+
+        public int ContarPorSexo(string tipo)
+        {
+            return Consultar().Count(p=>p.Sexo.Equals(tipo));
         }
 
     }

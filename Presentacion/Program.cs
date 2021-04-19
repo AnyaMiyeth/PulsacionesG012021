@@ -51,6 +51,11 @@ namespace Presentacion
                 Console.WriteLine(response.Mensaje);
             }
 
+
+            string Tipo = Console.ReadLine();
+
+
+
             Console.ReadKey();
         }
     }
